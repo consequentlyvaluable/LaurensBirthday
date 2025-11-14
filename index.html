@@ -161,12 +161,31 @@
       letter-spacing: 0.05em;
       text-decoration: none;
       box-shadow: 0 15px 40px rgba(255, 105, 135, 0.45);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+      position: relative;
+      overflow: visible;
     }
 
     .cta-button:hover {
       transform: translateY(-4px) scale(1.02);
       box-shadow: 0 22px 48px rgba(255, 105, 135, 0.6);
+    }
+
+    .cta-button[disabled] {
+      filter: grayscale(0.2) brightness(0.9);
+      cursor: not-allowed;
+      box-shadow: 0 10px 28px rgba(255, 105, 135, 0.3);
+    }
+
+    .cta-button .sparkle {
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 3rem;
+      pointer-events: none;
+      animation: sparkle 1.8s ease-out forwards;
+      filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
     }
 
     @media (max-width: 600px) {
@@ -218,24 +237,31 @@
     function makeAWish(event) {
       event.preventDefault();
       const button = event.currentTarget;
+      if (button.disabled) {
+        return;
+      }
+
+      const originalText = button.dataset.originalText || button.textContent;
+      button.dataset.originalText = originalText;
       button.textContent = 'Wish in progress...';
       button.disabled = true;
-      button.style.cursor = 'not-allowed';
 
       const sparkle = document.createElement('div');
-      sparkle.style.position = 'absolute';
-      sparkle.style.top = '-40px';
-      sparkle.style.left = '50%';
-      sparkle.style.transform = 'translateX(-50%)';
-      sparkle.style.fontSize = '3rem';
-      sparkle.style.animation = 'sparkle 1.8s ease-out forwards';
+      sparkle.className = 'sparkle';
       sparkle.textContent = '✨';
-      button.parentElement.appendChild(sparkle);
+      button.appendChild(sparkle);
+
+      const resetDelay = 2600;
 
       setTimeout(() => {
-        button.textContent = 'Wish Granted!';
         sparkle.remove();
+        button.textContent = 'Wish Granted!';
       }, 1800);
+
+      setTimeout(() => {
+        button.textContent = originalText;
+        button.disabled = false;
+      }, resetDelay);
     }
 
     const style = document.createElement('style');
