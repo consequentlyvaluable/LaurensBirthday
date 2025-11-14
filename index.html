@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday, Lauren!</title>
+  <style>
+    :root {
+      --bg-gradient: radial-gradient(circle at top, #ffe6f7 0%, #ffccf2 30%, #b3e5fc 70%, #8ec5fc 100%);
+      --text-color: #4a148c;
+      --accent-color: #ff6f91;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: var(--bg-gradient);
+      font-family: 'Trebuchet MS', 'Gill Sans', 'Gill Sans MT', Calibri, 'Segoe UI', sans-serif;
+      overflow: hidden;
+      color: var(--text-color);
+    }
+
+    .card {
+      position: relative;
+      max-width: 720px;
+      width: 90%;
+      padding: 3.5rem 3rem;
+      border-radius: 40px;
+      background: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 30px 80px rgba(79, 45, 110, 0.35);
+      text-align: center;
+      backdrop-filter: blur(6px);
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      margin-bottom: 1rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      font-size: clamp(1.4rem, 3.2vw, 2.2rem);
+      margin-bottom: 1.75rem;
+      color: #d81b60;
+      font-weight: 600;
+    }
+
+    p {
+      font-size: clamp(1rem, 2.1vw, 1.3rem);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .signature {
+      font-weight: bold;
+      font-size: clamp(1.1rem, 2.6vw, 1.5rem);
+      color: #5e35b1;
+    }
+
+    .balloons {
+      position: absolute;
+      inset: -120px -60px auto;
+      pointer-events: none;
+    }
+
+    .balloon {
+      position: absolute;
+      width: 110px;
+      height: 140px;
+      border-radius: 55% 55% 50% 50%;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.65), currentColor);
+      animation: float 6s ease-in-out infinite;
+      transform-origin: bottom center;
+      opacity: 0.85;
+    }
+
+    .balloon::after {
+      content: '';
+      position: absolute;
+      bottom: -60px;
+      left: 50%;
+      width: 3px;
+      height: 60px;
+      background: rgba(0, 0, 0, 0.12);
+    }
+
+    .balloon:nth-child(1) {
+      left: 20%;
+      color: #ff6f91;
+      animation-delay: 0s;
+    }
+
+    .balloon:nth-child(2) {
+      left: 45%;
+      color: #ffd166;
+      animation-delay: 1.2s;
+    }
+
+    .balloon:nth-child(3) {
+      left: 70%;
+      color: #7dd87d;
+      animation-delay: 2.4s;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0) rotate(-4deg);
+      }
+      50% {
+        transform: translateY(-25px) rotate(4deg);
+      }
+    }
+
+    .confetti {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .confetti-piece {
+      position: absolute;
+      width: 12px;
+      height: 18px;
+      border-radius: 4px;
+      opacity: 0;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-10vh) rotate(0deg);
+        opacity: 1;
+      }
+      70% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 0.85rem 2.75rem;
+      border-radius: 999px;
+      background: linear-gradient(120deg, #ff6f91, #ff9671, #ffc75f);
+      color: white;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      box-shadow: 0 15px 40px rgba(255, 105, 135, 0.45);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 22px 48px rgba(255, 105, 135, 0.6);
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        padding: 2.5rem 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="confetti" aria-hidden="true"></div>
+  <div class="card">
+    <div class="balloons" aria-hidden="true">
+      <div class="balloon"></div>
+      <div class="balloon"></div>
+      <div class="balloon"></div>
+    </div>
+    <h1>Happy Birthday, Lauren!</h1>
+    <h2>Celebrating the brightest star in our sky ✨</h2>
+    <p>
+      Dear Lauren, today is all about you! May your day be filled with the kind of
+      laughter that makes your cheeks hurt, the adventures that become cherished
+      memories, and the hugs that feel like home.
+    </p>
+    <p>
+      Thank you for filling our lives with kindness, creativity, and magic. Keep
+      shining your beautiful light—this world is better because you are in it.
+    </p>
+    <p class="signature">With so much love, your friends 💖</p>
+    <a class="cta-button" href="#" onclick="makeAWish(event)">Make a Wish</a>
+  </div>
+  <script>
+    const confettiContainer = document.querySelector('.confetti');
+    const colors = ['#ff6f91', '#ff9671', '#ffc75f', '#f9f871', '#7dd87d', '#84d2f6'];
+
+    function createConfettiPiece(index) {
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      piece.style.background = colors[index % colors.length];
+      piece.style.left = Math.random() * 100 + 'vw';
+      piece.style.animationDuration = 4 + Math.random() * 3 + 's';
+      piece.style.animationDelay = Math.random() * -5 + 's';
+      piece.style.transform = `rotate(${Math.random() * 360}deg)`;
+      return piece;
+    }
+
+    for (let i = 0; i < 120; i++) {
+      confettiContainer.appendChild(createConfettiPiece(i));
+    }
+
+    function makeAWish(event) {
+      event.preventDefault();
+      const button = event.currentTarget;
+      button.textContent = 'Wish in progress...';
+      button.disabled = true;
+      button.style.cursor = 'not-allowed';
+
+      const sparkle = document.createElement('div');
+      sparkle.style.position = 'absolute';
+      sparkle.style.top = '-40px';
+      sparkle.style.left = '50%';
+      sparkle.style.transform = 'translateX(-50%)';
+      sparkle.style.fontSize = '3rem';
+      sparkle.style.animation = 'sparkle 1.8s ease-out forwards';
+      sparkle.textContent = '✨';
+      button.parentElement.appendChild(sparkle);
+
+      setTimeout(() => {
+        button.textContent = 'Wish Granted!';
+        sparkle.remove();
+      }, 1800);
+    }
+
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes sparkle {
+        0% { opacity: 0; transform: translate(-50%, 20px) scale(0.4); }
+        40% { opacity: 1; transform: translate(-50%, -10px) scale(1.2); }
+        100% { opacity: 0; transform: translate(-50%, -60px) scale(0.5); }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>
